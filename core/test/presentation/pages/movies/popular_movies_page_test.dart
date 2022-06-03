@@ -27,17 +27,15 @@ void main() {
 
   group('Popular Movie Page', () {
     testWidgets(
-        'Should display CircularProgressIndicator when state is PopularMoviesLoading',
+        'should display CircularProgressIndicator when state is PopularMoviesLoading',
         (WidgetTester tester) async {
       when(() => mockPopularMoviesBloc.state)
           .thenReturn(PopularMoviesLoading());
-      final title = find.text('Popular Movies');
       final circular = find.byType(CircularProgressIndicator);
 
       await tester.pumpWidget(_makeTestableWidget(const PopularMoviesPage()));
 
       expect(circular, findsOneWidget);
-      expect(title, findsOneWidget);
     });
 
     testWidgets('Should display ListView when state is PopularMoviesData',

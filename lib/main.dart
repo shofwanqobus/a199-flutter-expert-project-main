@@ -31,10 +31,12 @@ import 'package:about/about_page.dart';
 import 'package:search/presentation/bloc/movies/search_bloc.dart';
 import 'package:search/presentation/bloc/tv/search_bloc.dart';
 import 'package:search/presentation/pages/search_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   di.init(await getHttpClient());
   runApp(MyApp());
 }
@@ -42,7 +44,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
         BlocProvider(
           create: (_) => di.locator<MoviesSearchBloc>(),

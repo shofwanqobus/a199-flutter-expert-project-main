@@ -19,36 +19,32 @@ void main() {
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<MockTopRatedTVBloc>.value(
+    return BlocProvider<TopRatedTVBloc>.value(
       value: mockTopRatedTVBloc,
       child: MaterialApp(home: body),
     );
   }
 
-  group('Popular TV Page', () {
+  group('Top Rated TV Page', () {
     testWidgets(
         'Should display CircularProgressIndicator when state is TopRatedTVLoading',
         (WidgetTester tester) async {
       when(() => mockTopRatedTVBloc.state).thenReturn(TopRatedTVLoading());
-      final title = find.text('Top Rated TV');
       final circular = find.byType(CircularProgressIndicator);
 
       await tester.pumpWidget(_makeTestableWidget(const TopRatedTVsPage()));
 
       expect(circular, findsOneWidget);
-      expect(title, findsOneWidget);
     });
 
     testWidgets('Should display ListView when state is TopRatedTVData',
         (WidgetTester tester) async {
       when(() => mockTopRatedTVBloc.state)
           .thenReturn(TopRatedTVData(testTVList));
-      final title = find.text('Top Rated TV');
       final list = find.byType(ListView);
 
       await tester.pumpWidget(_makeTestableWidget(const TopRatedTVsPage()));
 
-      expect(title, findsOneWidget);
       expect(list, findsOneWidget);
     });
 
@@ -56,12 +52,10 @@ void main() {
         (WidgetTester tester) async {
       when(() => mockTopRatedTVBloc.state)
           .thenReturn(TopRatedTVError('Failed'));
-      final title = find.text('Top Rated TV');
       final errorText = find.text('Failed');
 
       await tester.pumpWidget(_makeTestableWidget(const TopRatedTVsPage()));
 
-      expect(title, findsOneWidget);
       expect(errorText, findsOneWidget);
     });
   });

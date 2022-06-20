@@ -19,7 +19,7 @@ void main() {
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<MockPopularMoviesBloc>.value(
+    return BlocProvider<PopularMoviesBloc>.value(
       value: mockPopularMoviesBloc,
       child: MaterialApp(home: body),
     );

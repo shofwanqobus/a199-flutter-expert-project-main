@@ -19,13 +19,13 @@ void main() {
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<MockWatchlistTVBloc>.value(
+    return BlocProvider<WatchlistTVBloc>.value(
       value: mockWatchlistTVBloc,
       child: MaterialApp(home: body),
     );
   }
 
-  group('Popular TV Page', () {
+  group('Watchlist TV Page', () {
     testWidgets(
         'Should display CircularProgressIndicator when state is WatchlistTVLoading',
         (WidgetTester tester) async {

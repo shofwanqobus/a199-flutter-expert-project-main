@@ -19,7 +19,9 @@ void main() {
     registerFallbackValue(MoviesSearchEventFake());
     registerFallbackValue(TVSearchStateFake());
     registerFallbackValue(TVSearchEventFake());
+  });
 
+  setUp(() {
     mockMoviesSearchBloc = MockMoviesSearchBloc();
     mockTVSearchBloc = MockTVSearchBloc();
   });
@@ -107,29 +109,23 @@ void main() {
           .thenReturn(SearchMoviesData(testMovieList));
       when(() => mockTVSearchBloc.state).thenReturn(SearchTVData(testTVList));
 
-      final searchList = find.byKey(Key('search-listview'));
+      final listView = find.byType(ListView);
       await test.pumpWidget(_makeTestableWidget(const SearchPage()));
 
-      final textField = find.byKey(Key('search-textfield'));
-      final queryText = find.text('superman');
-
-      await test.enterText(textField, 'superman');
-      await test.testTextInput.receiveAction(TextInputAction.search);
-
-      expect(searchList, findsOneWidget);
-      expect(queryText, findsOneWidget);
+      expect(listView, findsOneWidget);
     });
 
     testWidgets(
         'should display Cannot Found Movies and TV when result is empty',
         (WidgetTester test) async {
-      when(() => mockMoviesSearchBloc.state).thenReturn(SearchMoviesData([]));
-      when(() => mockTVSearchBloc.state).thenReturn(SearchTVData([]));
+      when(() => mockMoviesSearchBloc.state)
+          .thenReturn(SearchMoviesData(const []));
+      when(() => mockTVSearchBloc.state).thenReturn(SearchTVData(const []));
 
       final errorText = find.text('Cannot Found Movies and TV');
-      await test.pumpWidget(_makeTestableWidget(SearchPage()));
+      await test.pumpWidget(_makeTestableWidget(const SearchPage()));
 
-      final textField = find.byKey(Key('search-textfield'));
+      final textField = find.byKey(const Key('search-textfield'));
       final queryText = find.text('superman');
 
       await test.enterText(textField, 'superman');

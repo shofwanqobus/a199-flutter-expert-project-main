@@ -24,9 +24,7 @@ void main() {
     registerFallbackValue(WatchlistMovieModifyEventFake());
     registerFallbackValue(MovieDetailStateFake());
     registerFallbackValue(MovieDetailEventFake());
-  });
 
-  setUp(() {
     mockWatchlistMoviesStatusBloc = MockWatchlistMoviesStatusBloc();
     mockWatchlistMoviesModifyBloc = MockWatchListMoviesModifyBloc();
     mockMovieDetailBloc = MockMovieDetailBloc();

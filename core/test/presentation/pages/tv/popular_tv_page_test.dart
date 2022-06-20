@@ -19,7 +19,7 @@ void main() {
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<MockPopularTVBloc>.value(
+    return BlocProvider<PopularTVBloc>.value(
       value: mockPopularTVBloc,
       child: MaterialApp(home: body),
     );
@@ -30,36 +30,30 @@ void main() {
         'Should display CircularProgressIndicator when state is PopularTVLoading',
         (WidgetTester tester) async {
       when(() => mockPopularTVBloc.state).thenReturn(PopularTVLoading());
-      final title = find.text('Popular TV');
       final circular = find.byType(CircularProgressIndicator);
 
       await tester.pumpWidget(_makeTestableWidget(const PopularTVsPage()));
 
       expect(circular, findsOneWidget);
-      expect(title, findsOneWidget);
     });
 
     testWidgets('Should display ListView when state is PopularTVData',
         (WidgetTester tester) async {
       when(() => mockPopularTVBloc.state).thenReturn(PopularTVData(testTVList));
-      final title = find.text('Popular TV');
       final list = find.byType(ListView);
 
       await tester.pumpWidget(_makeTestableWidget(const PopularTVsPage()));
 
-      expect(title, findsOneWidget);
       expect(list, findsOneWidget);
     });
 
     testWidgets("Should display Text('Failed') when state is PopularTVError",
         (WidgetTester tester) async {
       when(() => mockPopularTVBloc.state).thenReturn(PopularTVError('Failed'));
-      final title = find.text('Popular TV');
       final errorText = find.text('Failed');
 
       await tester.pumpWidget(_makeTestableWidget(const PopularTVsPage()));
 
-      expect(title, findsOneWidget);
       expect(errorText, findsOneWidget);
     });
   });

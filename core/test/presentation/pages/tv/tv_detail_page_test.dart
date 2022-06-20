@@ -24,14 +24,16 @@ void main() {
     registerFallbackValue(WatchlistTVModifyEventFake());
     registerFallbackValue(TVDetailStateFake());
     registerFallbackValue(TVDetailEventFake());
+  });
 
+  setUp(() {
     mockWatchlistTVStatusBloc = MockWatchlistTVStatusBloc();
     mockWatchlistTVModifyBloc = MockWatchlistTVModifyBloc();
     mockTVDetailBloc = MockTVDetailBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<MockWatchlistTVStatusBloc>.value(
+    return BlocProvider<TVWatchlistStatusBloc>.value(
       value: mockWatchlistTVStatusBloc,
       child: BlocProvider<WatchListTVModifyBloc>.value(
         value: mockWatchlistTVModifyBloc,

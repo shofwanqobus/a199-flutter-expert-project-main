@@ -17,14 +17,14 @@ class WatchlistMoviesBloc
   }
 
   void _fetchWatchlistMovies(FetchWatchlistMovies fetchWatchlistMovies,
-      Emitter<WatchlistMoviesState> emitter) async {
-    emitter(WatchlistMoviesLoading());
+      Emitter<WatchlistMoviesState> emit) async {
+    emit(WatchlistMoviesLoading());
     final hasil = await getWatchlistMovies.execute();
     hasil.fold(
-      (failure) => emitter(WatchlistMoviesError(failure.message)),
+      (failure) => emit(WatchlistMoviesError(failure.message)),
       (data) => data.isNotEmpty
-          ? emitter(WatchlistMoviesData(data))
-          : emitter(WatchlistMoviesEmpty()),
+          ? emit(WatchlistMoviesData(data))
+          : emit(WatchlistMoviesEmpty()),
     );
   }
 }

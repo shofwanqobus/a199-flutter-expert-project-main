@@ -3,31 +3,39 @@ import 'package:core/presentation/bloc/movies/watchlist_movie_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../dummy_data/dummy_objects.dart';
-import 'watchlist_movies_page_test.mocks.dart';
+
+class MockMovieWatchlistBloc
+    extends MockBloc<WatchlistMoviesEvent, WatchlistMoviesState>
+    implements WatchlistMoviesBloc {}
+
+class MovieWatchlistEventFake extends Fake implements WatchlistMoviesEvent {}
+
+class MovieWatchlistStateFake extends Fake implements WatchlistMoviesState {}
 
 void main() {
-  late final MockWatchlistMoviesBloc mockWatchlistMoviesBloc;
+  late final MockMovieWatchlistBloc mockWatchlistMoviesBloc;
 
   setUpAll(() {
-    registerFallbackValue(WatchlistMoviesEventFake());
-    registerFallbackValue(WatchlistMoviesStateFake());
+    registerFallbackValue(MovieWatchlistEventFake());
+    registerFallbackValue(MovieWatchlistStateFake());
 
-    mockWatchlistMoviesBloc = MockWatchlistMoviesBloc();
+    mockWatchlistMoviesBloc = MockMovieWatchlistBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<MockWatchlistMoviesBloc>.value(
+    return BlocProvider<WatchlistMoviesBloc>.value(
       value: mockWatchlistMoviesBloc,
       child: MaterialApp(home: body),
     );
   }
 
-  group('Popular Movie Page', () {
+  group('Watchlist Movie Page', () {
     testWidgets(
-        'Should display CircularProgressIndicator when state is WatchlistMoviesLoading',
+        "should display CircularProgressIndicator when state is WatchlistMoviesLoading",
         (WidgetTester tester) async {
       when(() => mockWatchlistMoviesBloc.state)
           .thenReturn(WatchlistMoviesLoading());
@@ -38,7 +46,7 @@ void main() {
       expect(circular, findsOneWidget);
     });
 
-    testWidgets('Should display ListView when state is WatchlistMoviesData',
+    testWidgets("should display ListView when state is WatchlistMoviesData",
         (WidgetTester tester) async {
       when(() => mockWatchlistMoviesBloc.state)
           .thenReturn(WatchlistMoviesData(testMovieList));
@@ -50,7 +58,7 @@ void main() {
     });
 
     testWidgets(
-        "Should display Text('Failed') when state is WatchlistMoviesError",
+        "should display Text('Failed') when state is WatchlistMoviesError",
         (WidgetTester tester) async {
       when(() => mockWatchlistMoviesBloc.state)
           .thenReturn(WatchlistMoviesError('Failed'));
@@ -61,11 +69,11 @@ void main() {
     });
 
     testWidgets(
-        "Should display Text('You Don't Have Watchlist Movies') when state is WatchlistMovieEmpty",
+        "should display Text('You don't have watchlist movies') when state is WatchlistMoviesEmpty",
         (WidgetTester tester) async {
       when(() => mockWatchlistMoviesBloc.state)
           .thenReturn(WatchlistMoviesEmpty());
-      final empty = find.text("You Don't Have Watchlist Movies");
+      final empty = find.text("You don't have watchlist movies");
 
       await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
       expect(empty, findsOneWidget);

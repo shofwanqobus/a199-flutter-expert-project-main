@@ -27,7 +27,7 @@ class _HomeMoviePage extends State<HomeMoviePage> {
         BlocBuilder<NowPlayingMoviesBloc, NowPlayingMoviesState>(
           builder: (_, state) {
             if (state is NowPlayingMoviesLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is NowPlayingMoviesData) {
               return MovieList(state.movie);
             } else {
@@ -41,7 +41,7 @@ class _HomeMoviePage extends State<HomeMoviePage> {
         BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
           builder: (_, state) {
             if (state is PopularMoviesLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is PopularMoviesData) {
               return MovieList(state.movie);
             } else {
@@ -55,7 +55,7 @@ class _HomeMoviePage extends State<HomeMoviePage> {
         BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
           builder: (_, state) {
             if (state is TopRatedMoviesLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is TopRatedMoviesData) {
               return MovieList(state.movie);
             } else {

@@ -19,22 +19,18 @@ void main() {
     registerFallbackValue(MoviesSearchEventFake());
     registerFallbackValue(TVSearchStateFake());
     registerFallbackValue(TVSearchEventFake());
-  });
 
-  setUp(() {
     mockMoviesSearchBloc = MockMoviesSearchBloc();
     mockTVSearchBloc = MockTVSearchBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<MoviesSearchBloc>.value(
-      value: mockMoviesSearchBloc,
-      child: BlocProvider<TVSearchBloc>.value(
-        value: mockTVSearchBloc,
-        child: MaterialApp(
-          home: body,
-        ),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MoviesSearchBloc>.value(value: mockMoviesSearchBloc),
+        BlocProvider<TVSearchBloc>.value(value: mockTVSearchBloc),
+      ],
+      child: MaterialApp(home: body),
     );
   }
 
@@ -116,15 +112,15 @@ void main() {
     });
 
     testWidgets(
-        'should display Cannot Found Movies and TV when result is empty',
+        "should display ('Data cannot be found at Movies or TV') when result is empty",
         (WidgetTester test) async {
       when(() => mockMoviesSearchBloc.state)
           .thenReturn(SearchMoviesData(const []));
       when(() => mockTVSearchBloc.state).thenReturn(SearchTVData(const []));
 
-      final errorText = find.text('Cannot Found Movies and TV');
       await test.pumpWidget(_makeTestableWidget(const SearchPage()));
 
+      final errorText = find.text('Data cannot be found at Movies or TV');
       final textField = find.byKey(const Key('search-textfield'));
       final queryText = find.text('superman');
 

@@ -65,6 +65,7 @@ class SearchPage extends StatelessWidget {
                             itemBuilder: (_, index) => (result[index] is Movie)
                                 ? MovieCard(result[index])
                                 : TVCard(result[index]),
+                            itemCount: result.length,
                           )
                         : const Center(
                             child: Text(

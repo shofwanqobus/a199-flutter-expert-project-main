@@ -139,10 +139,10 @@ void main() {
       await tester
           .pumpWidget(_makeTestableWidget(const MovieDetailPage(id: id)));
 
+      expect(find.byIcon(Icons.add), findsOneWidget);
       await tester.tap(button);
       await tester.pump();
 
-      expect(find.byIcon(Icons.add), findsOneWidget);
       expect(find.byType(SnackBar), findsOneWidget);
       expect(find.text('Added to Watchlist'), findsOneWidget);
     });
@@ -166,10 +166,10 @@ void main() {
       await tester
           .pumpWidget(_makeTestableWidget(const MovieDetailPage(id: id)));
 
+      expect(find.byIcon(Icons.add), findsOneWidget);
       await tester.tap(button);
       await tester.pump();
 
-      expect(find.byIcon(Icons.add), findsOneWidget);
       expect(find.byType(SnackBar), findsOneWidget);
       expect(find.text('Removed from Watchlist'), findsOneWidget);
     });
@@ -198,7 +198,7 @@ void main() {
       await tester.pump();
 
       expect(find.byIcon(Icons.add), findsOneWidget);
-      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.byType(AlertDialog), findsOneWidget);
       expect(find.text('Failed'), findsOneWidget);
     });
   });

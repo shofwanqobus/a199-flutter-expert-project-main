@@ -12,14 +12,6 @@ class WatchListMoviesModifyLoading extends WatchListMoviesModifyState {
   List<Object> get props => [];
 }
 
-class WatchListMoviesModifyError extends WatchListMoviesModifyState {
-  final String message;
-  WatchListMoviesModifyError(this.message);
-
-  @override
-  List<Object> get props => [message];
-}
-
 class MovieAdd extends WatchListMoviesModifyState {
   final String message;
   MovieAdd(this.message);
@@ -31,6 +23,14 @@ class MovieAdd extends WatchListMoviesModifyState {
 class MovieRemove extends WatchListMoviesModifyState {
   final String message;
   MovieRemove(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class WatchListMoviesModifyError extends WatchListMoviesModifyState {
+  final String message;
+  WatchListMoviesModifyError(this.message);
 
   @override
   List<Object> get props => [message];

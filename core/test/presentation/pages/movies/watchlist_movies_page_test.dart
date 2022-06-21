@@ -69,11 +69,11 @@ void main() {
     });
 
     testWidgets(
-        "should display Text('You don't have watchlist movies') when state is WatchlistMoviesEmpty",
+        "should display Text('Watchlist is Empty') when state is WatchlistMoviesEmpty",
         (WidgetTester tester) async {
       when(() => mockWatchlistMoviesBloc.state)
           .thenReturn(WatchlistMoviesEmpty());
-      final empty = find.text("You don't have watchlist movies");
+      final empty = find.text("Watchlist is Empty");
 
       await tester.pumpWidget(_makeTestableWidget(const WatchlistMoviesPage()));
       expect(empty, findsOneWidget);

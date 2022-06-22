@@ -22,6 +22,7 @@ import 'package:core/presentation/bloc/tv/watchlist_tv_bloc.dart';
 import 'package:core/presentation/bloc/tv/watchlist_tv_modify_bloc.dart';
 import 'package:core/presentation/bloc/tv/watchlist_tv_status_bloc.dart';
 import 'package:core/utils/ssl.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,9 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Pass all uncaught errors from the framework to Crashlytics.
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   di.init(await getHttpClient());
   runApp(MyApp());
 }

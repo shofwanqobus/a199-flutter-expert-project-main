@@ -84,6 +84,11 @@ class _CustomDrawerState extends State<CustomDrawer>
             leading: const Icon(Icons.info_outline),
             title: const Text('About'),
           ),
+          ListTile(
+            onTap: () => throw Exception(),
+            leading: const Icon(Icons.error),
+            title: const Text('Throw Test Exception'),
+          ),
         ],
       );
 }
